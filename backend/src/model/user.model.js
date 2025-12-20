@@ -35,9 +35,14 @@ userSchema.methods.comparePassword = async function (password) {
 };
 
 userSchema.methods.generateToken = async function () {
-  return await jwt.sign({ email: this.email }, process.env.JWT_SECRET, {
-    expiresIn: "1h",
-  });
+  try {
+    return await jwt.sign({ email: this.email }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+  } catch (err) {
+    console.log(err);
+    throw new Error("Token generation failed");
+  }
 };
 
 const User = mongoose.model("User", userSchema);

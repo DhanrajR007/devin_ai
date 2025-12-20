@@ -9,7 +9,9 @@ export const registerUser = async (email, password) => {
     const hashedPassword = await User.hashPassword(password);
 
     const user = await User.create({ email, password: hashedPassword });
-    return user;
+    const token = await user.generateToken();
+
+    return { user, token };
   } catch (error) {
     console.log(error);
     throw new Error("User registration failed");
