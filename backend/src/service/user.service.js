@@ -17,3 +17,21 @@ export const registerUser = async (email, password) => {
     throw new Error("User registration failed");
   }
 };
+
+export const loginUser = async (email, password) => {
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw new Error("User not found");
+  }
+  try {
+    const isPasswordValid = await user.comparePassword(password);
+    if (!isPasswordValid) {
+      throw new Error("Invalid password");
+    }
+    const token = await user.generateToken();
+    return { user, token };
+  } catch (error) {
+    console.log(error);
+    throw new Error("User login failed");
+  }
+};
