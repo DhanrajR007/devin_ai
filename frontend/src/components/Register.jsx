@@ -6,6 +6,11 @@ const Register = ({ onSwitch }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(email, password);
+  };
+
   return (
     <div className="w-full">
       <div className="text-center mb-10">
@@ -17,7 +22,7 @@ const Register = ({ onSwitch }) => {
         </p>
       </div>
 
-      <form className="space-y-5">
+      <form onSubmit={handleSubmit} className="space-y-5">
         {/* <div className="space-y-2">
           <label className="text-sm font-medium text-zinc-300">Full Name</label>
           <div className="relative group">
