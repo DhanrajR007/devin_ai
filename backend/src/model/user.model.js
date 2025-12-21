@@ -37,7 +37,7 @@ userSchema.methods.comparePassword = async function (password) {
 userSchema.methods.generateToken = async function () {
   try {
     return await jwt.sign({ email: this.email }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: "24h",
     });
   } catch (err) {
     console.log(err);
