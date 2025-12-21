@@ -14,7 +14,7 @@ const Auth = () => {
       </div>
 
       {/* Subtle Grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-size[32px_32px] pointer-events-none" />
 
       <div className="w-full max-w-md relative z-10 p-6">
         <div className="bg-zinc-900/40 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/10 p-8 sm:p-10 transition-all duration-300">
