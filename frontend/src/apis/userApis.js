@@ -1,21 +1,21 @@
 import axiosInstance from "./axiosInstance";
 
-export const loginUser = (email, password) => {
-  const user = axiosInstance.post("/auth/login", { email, password });
+export const loginUser = async (email, password) => {
+  const user = await axiosInstance.post("/auth/login", { email, password });
   return user;
 };
 
-export const registerUser = (email, password) => {
-  const user = axiosInstance.post("/auth/register", { email, password });
+export const registerUser = async (email, password) => {
+  const user = await axiosInstance.post("/auth/register", { email, password });
   return user;
 };
 
-export const logoutUser = () => {
-  const user = axiosInstance.get("/auth/logout");
+export const logoutUser = async () => {
+  const user = await axiosInstance.get("/auth/logout");
   return user;
 };
 
-export const getUser = () => {
-  const user = axiosInstance.get("/auth/getUser");
+export const getUser = async () => {
+  const user = await axiosInstance.get("/auth/getUser");
   return user;
 };

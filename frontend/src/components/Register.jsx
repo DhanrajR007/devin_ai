@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { User, Mail, Lock, Eye, EyeOff, ArrowRight } from "lucide-react";
+import { registerUser } from "../apis/userApis";
 
 const Register = ({ onSwitch }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(email, password);
+    const response = await registerUser(email, password);
+    console.log(response);
   };
 
   return (
