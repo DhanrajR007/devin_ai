@@ -1,4 +1,5 @@
 import { loginUser, registerUser } from "../service/user.service.js";
+import redisClient from "../db/redis.client.js";
 
 export const register = async (req, res) => {
   const { email, password } = req.body;
