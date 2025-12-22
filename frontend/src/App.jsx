@@ -1,10 +1,12 @@
-import React from "react";
-import Auth from "./pages/Auth";
+import AppRouter from "./routing/router";
+import userProvider from "../src/context/ContextProvider";
 
 const App = () => {
   return (
     <div>
-      <Auth />
+      <userProvider>
+        <AppRouter />
+      </userProvider>
     </div>
   );
 };
