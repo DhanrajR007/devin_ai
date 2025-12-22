@@ -1,12 +1,12 @@
 import AppRouter from "./routing/router";
-import userProvider from "../src/context/ContextProvider";
+import { UserProvider } from "./context/ContextProvider";
 
 const App = () => {
   return (
     <div>
-      <userProvider>
+      <UserProvider>
         <AppRouter />
-      </userProvider>
+      </UserProvider>
     </div>
   );
 };

@@ -2,20 +2,26 @@ import React, { useState } from "react";
 import { Mail, Lock, Eye, EyeOff, ArrowRight } from "lucide-react";
 
 import { loginUser } from "../apis/userApis";
+import { useUser } from "../context/ContextProvider";
+import { useNavigate } from "react-router-dom";
 
 const Login = ({ onSwitch }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const { setUser } = useUser();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const { user, token } = await loginUser(email, password);
-      localStorage.setItem("authToken", token);
-      console.log(user, token);
+      const { data } = await loginUser(email, password);
+      console.log(data.user, data.token);
+      localStorage.setItem("authToken", data.token);
+      setUser(data.user);
+      navigate("/");
     } catch (error) {
       console.log(error);
     } finally {

@@ -1,17 +1,23 @@
 import React, { useState } from "react";
 import { User, Mail, Lock, Eye, EyeOff, ArrowRight } from "lucide-react";
 import { registerUser } from "../apis/userApis";
+import { UserProvider } from "../context/ContextProvider";
+import { useNavigate } from "react-router-dom";
 
 const Register = ({ onSwitch }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setUser } = UserProvider();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { user, token } = await registerUser(email, password);
-    localStorage.setItem("authToken", token);
-    console.log(user, token);
+    const { data } = await registerUser(email, password);
+    setUser(data.user);
+
+    localStorage.setItem("authToken", data.token);
+    navigate("/");
   };
 
   return (

@@ -1,7 +1,14 @@
 import React from "react";
+import { useUser } from "../context/ContextProvider";
 
 const Home = () => {
-  return <div>Home</div>;
+  const { user } = useUser();
+  return (
+    <div>
+      Home
+      {JSON.stringify(user)}
+    </div>
+  );
 };
 
 export default Home;
