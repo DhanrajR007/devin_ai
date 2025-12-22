@@ -9,8 +9,9 @@ const Register = ({ onSwitch }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await registerUser(email, password);
-    console.log(response);
+    const { user, token } = await registerUser(email, password);
+    localStorage.setItem("authToken", token);
+    console.log(user, token);
   };
 
   return (

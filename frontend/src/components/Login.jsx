@@ -13,8 +13,9 @@ const Login = ({ onSwitch }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await loginUser(email, password);
-      console.log(response);
+      const { user, token } = await loginUser(email, password);
+      localStorage.setItem("authToken", token);
+      console.log(user, token);
     } catch (error) {
       console.log(error);
     } finally {
