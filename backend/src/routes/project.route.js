@@ -1,9 +1,20 @@
 import express from "express";
-import { createProjectController } from "../controllers/project.controller.js";
+import {
+  addUserToProjectController,
+  createProjectController,
+  getProjectsController,
+} from "../controllers/project.controller.js";
 import { authMiddleware } from "../middleware/auth.middleware.js";
-
+import { body } from "express-validator";
 const router = express.Router();
 
-router.post("/create", authMiddleware, createProjectController);
+router.post(
+  "/create",
+  body("name").isString().withMessage("Name is required"),
+  authMiddleware,
+  createProjectController
+);
 
+router.get("/all", authMiddleware, getProjectsController);
+router.put("/add-user", authMiddleware, addUserToProjectController);
 export default router;
