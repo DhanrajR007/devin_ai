@@ -1,5 +1,10 @@
 import express from "express";
-import { login, logout, register } from "../controllers/auth.controller.js";
+import {
+  allUsersController,
+  login,
+  logout,
+  register,
+} from "../controllers/auth.controller.js";
 import { authMiddleware } from "../middleware/auth.middleware.js";
 
 const router = express.Router();
@@ -11,4 +16,5 @@ router.get("/me", authMiddleware, (req, res) => {
 });
 
 router.get("/logout", authMiddleware, logout);
+router.get("/all-user", authMiddleware, allUsersController);
 export default router;

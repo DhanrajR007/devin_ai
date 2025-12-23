@@ -1,4 +1,4 @@
-import { loginUser, registerUser } from "../service/user.service.js";
+import { loginUser, registerUser, allUser } from "../service/user.service.js";
 import redisClient from "../db/redis.client.js";
 
 export const register = async (req, res) => {
@@ -55,5 +55,20 @@ export const logout = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "User logout failed" });
+  }
+};
+export const allUsersController = async (req, res) => {
+  const user = req.user.email;
+  if (!user) {
+    return res.status(400).json({ message: "User not found" });
+  }
+  try {
+    const users = await allUser(user);
+    return res
+      .status(200)
+      .json({ message: "Users fetched successfully", users });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Users fetching failed" });
   }
 };

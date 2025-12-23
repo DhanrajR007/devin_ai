@@ -1,3 +1,4 @@
+import { getUserByEmail } from "../dao/user.dao.js";
 import User from "../model/user.model.js";
 
 export const registerUser = async (email, password) => {
@@ -33,5 +34,19 @@ export const loginUser = async (email, password) => {
   } catch (error) {
     console.log(error);
     throw new Error("User login failed");
+  }
+};
+export const allUser = async (user) => {
+  try {
+    const { id } = await getUserByEmail(user);
+    const users = await User.find({
+      _id: {
+        $ne: id,
+      },
+    });
+    return users;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Users fetching failed");
   }
 };
