@@ -1,12 +1,11 @@
 import AppRouter from "./routing/router";
-import { UserProvider } from "./context/ContextProvider";
+// import { UserProvider } from "./context/ContextProvider";
+import Navbar from "./components/home/Navbar";
 
 const App = () => {
   return (
     <div>
-      <UserProvider>
-        <AppRouter />
-      </UserProvider>
+      <AppRouter />
     </div>
   );
 };
