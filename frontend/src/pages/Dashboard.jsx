@@ -4,6 +4,7 @@ import { Plus, MessageSquare, User, LogOut, Folder } from "lucide-react";
 import CreateProjectModal from "../components/CreateProjectModal";
 import { getAllProjects, createProject } from "../apis/projectApis";
 import { useUser } from "../context/ContextProvider";
+import { getUser } from "../apis/userApis";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -60,7 +61,7 @@ const Dashboard = () => {
             className="flex items-center gap-2 cursor-pointer"
             onClick={() => navigate("/")}
           >
-            <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600">
+            <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-linear-to-br from-blue-500 to-purple-600">
               <MessageSquare className="w-5 h-5 text-white" />
             </div>
             <span className="font-bold text-lg tracking-tight">Devin</span>

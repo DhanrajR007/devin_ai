@@ -26,7 +26,7 @@ const Hero = () => {
         </div>
 
         <h1
-          className={`text-5xl sm:text-7xl font-bold tracking-tight mb-8 bg-clip-text text-transparent bg-gradient-to-b from-white via-white/90 to-white/50 transition-all duration-700 delay-200 ${
+          className={`text-5xl sm:text-7xl font-bold tracking-tight mb-8 bg-clip-text text-transparent bg-linear-to-b from-white via-white/90 to-white/50 transition-all duration-700 delay-200 ${
             mounted ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
           }`}
         >

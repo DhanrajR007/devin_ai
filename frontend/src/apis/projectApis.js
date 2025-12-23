@@ -4,11 +4,7 @@ export const createProject = async (name) => {
   const token = localStorage.getItem("authToken");
   const config = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
 
-  const response = await axiosInstance.post(
-    "/projects/create",
-    { name },
-    config
-  );
+  const response = await axiosInstance.post("project/create", { name }, config);
   return response.data;
 };
 
@@ -16,6 +12,6 @@ export const getAllProjects = async () => {
   const token = localStorage.getItem("authToken");
   const config = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
 
-  const response = await axiosInstance.get("/projects/all", config);
+  const response = await axiosInstance.get("/project/all", config);
   return response.data;
 };

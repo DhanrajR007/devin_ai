@@ -16,6 +16,6 @@ export const logoutUser = async () => {
 };
 
 export const getUser = async () => {
-  const user = await axiosInstance.get("/auth/getUser");
+  const user = await axiosInstance.get("/auth/me");
   return user;
 };
