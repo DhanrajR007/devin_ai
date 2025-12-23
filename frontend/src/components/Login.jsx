@@ -18,7 +18,7 @@ const Login = ({ onSwitch }) => {
     setLoading(true);
     try {
       const { data } = await loginUser(email, password);
-      console.log(data.user, data.token);
+
       localStorage.setItem("authToken", data.token);
       setUser(data.user);
       navigate("/");

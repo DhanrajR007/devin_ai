@@ -8,19 +8,30 @@ import { getUser } from "../apis/userApis";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { user, setUser } = useUser(); // Assuming we have user in context, or we can fetch it
+  const { user, setUser } = useUser();
   const [projects, setProjects] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchProjects();
+    const init = async () => {
+      try {
+        const res = await getUser();
+        setUser(res.data.email);
+        await fetchProjects();
+      } catch (error) {
+        navigate("/auth");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    init();
   }, []);
 
   const fetchProjects = async () => {
     try {
       const data = await getAllProjects();
-      console.log("Projects data:", data);
       setProjects(data.projects || []);
     } catch (error) {
       console.error("Failed to fetch projects:", error);
@@ -40,8 +51,6 @@ const Dashboard = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    setUser(null);
     navigate("/");
   };
 
@@ -118,7 +127,7 @@ const Dashboard = () => {
             {projects.map((project) => (
               <div
                 key={project._id}
-                onClick={() => console.log("Navigate to project", project._id)} // Placeholder for project navigation
+                onClick={() => navigate(`/project`, { state: { project } })} // Placeholder for project navigation
                 className="group p-5 rounded-2xl bg-zinc-900/40 border border-white/5 hover:border-white/10 hover:bg-zinc-900/60 transition-all cursor-pointer relative overflow-hidden"
               >
                 <div className="flex items-start justify-between mb-4">
