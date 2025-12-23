@@ -70,3 +70,21 @@ export const addUserToProject = async (projectId, users, user) => {
     throw error;
   }
 };
+
+export const getProjectById = async (id, user) => {
+  try {
+    const getUser = await getUserByEmail(user.email);
+    if (!getUser) {
+      throw new Error("User not found");
+    }
+    const project = await Project.findOne({
+      _id: id,
+    }).populate("users");
+    if (!project) {
+      throw new Error("Project not found");
+    }
+    return project;
+  } catch (error) {
+    throw error;
+  }
+};

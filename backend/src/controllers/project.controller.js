@@ -1,6 +1,7 @@
 import {
   addUserToProject,
   createProject,
+  getProjectById,
   getProjects,
 } from "../service/project.service.js";
 
@@ -54,6 +55,24 @@ export const addUserToProjectController = async (req, res) => {
   try {
     const project = await addUserToProject(projectId, users, user);
 
+    return res.status(200).json({ project });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const getProjectByIdController = async (req, res) => {
+  const { id } = req.params;
+  if (!id) {
+    return res.status(400).json({ message: "Project ID is required" });
+  }
+  const user = req.user;
+  if (!user) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+  try {
+    const project = await getProjectById(id, user);
     return res.status(200).json({ project });
   } catch (error) {
     console.log(error);
