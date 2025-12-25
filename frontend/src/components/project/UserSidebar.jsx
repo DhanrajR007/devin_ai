@@ -1,4 +1,10 @@
+import { getAllUsers } from "../../apis/userApis";
+
 const UserSidebar = ({ isOpen, onClose, users }) => {
+  const addUser = async () => {
+    const users = await getAllUsers();
+    console.log(users);
+  };
   return (
     <div
       className={`fixed inset-y-0 left-0 z-50 w-64 bg-gray-900 border-r border-gray-800 transform transition-transform duration-300 ease-in-out ${
@@ -50,7 +56,10 @@ const UserSidebar = ({ isOpen, onClose, users }) => {
 
         {/* Add User Button */}
         <div className="p-4 border-t border-gray-800">
-          <button className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors duration-200 flex items-center justify-center space-x-2">
+          <button
+            onClick={addUser}
+            className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors duration-200 flex items-center justify-center space-x-2"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"

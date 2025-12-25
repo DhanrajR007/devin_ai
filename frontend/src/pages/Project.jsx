@@ -3,7 +3,6 @@ import ChatSection from "../components/project/ChatSection";
 import ProjectArea from "../components/project/ProjectArea";
 import UserSidebar from "../components/project/UserSidebar";
 import { useLocation } from "react-router-dom";
-import { useUser } from "../context/ContextProvider";
 import { getProjectById } from "../apis/projectApis";
 
 const Project = () => {
@@ -25,7 +24,6 @@ const Project = () => {
       console.log(error);
     }
   };
-
   return (
     <div className="relative flex h-screen bg-black overflow-hidden text-white font-sans">
       {/* Sidebar - Overlay */}
