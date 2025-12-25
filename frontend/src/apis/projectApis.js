@@ -15,3 +15,10 @@ export const getAllProjects = async () => {
   const response = await axiosInstance.get("/project/all", config);
   return response.data;
 };
+export const getProjectById = async (projectId) => {
+  const token = localStorage.getItem("authToken");
+  const config = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
+
+  const response = await axiosInstance.get(`/project/${projectId}`, config);
+  return response.data;
+};

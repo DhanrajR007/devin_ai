@@ -19,3 +19,11 @@ export const getUser = async () => {
   const user = await axiosInstance.get("/auth/me");
   return user;
 };
+
+export const getAllUsers = async () => {
+  const token = localStorage.getItem("authToken");
+  const config = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
+
+  const response = await axiosInstance.get("/auth/all-user", config);
+  return response.data;
+};

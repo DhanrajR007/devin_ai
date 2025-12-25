@@ -25,7 +25,6 @@ const Dashboard = () => {
         setLoading(false);
       }
     };
-
     init();
   }, []);
 
