@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const ChatSection = ({ onToggleSidebar }) => {
+const ChatSection = ({ onToggleSidebar, name }) => {
   const [messages, setMessages] = useState([
     {
       id: 1,
@@ -42,8 +42,13 @@ const ChatSection = ({ onToggleSidebar }) => {
   return (
     <div className="flex flex-col h-full bg-gray-900 border-r border-gray-800">
       {/* Header */}
+
       <div className="p-4 border-b border-gray-800 flex items-center justify-between">
+        <div>
+          <p className="text-lg text-white font-bold text-center">Team Chat</p>
+        </div>
         <div className="flex items-center space-x-3">
+          <h2 className="text-lg font-semibold text-white">{name}</h2>
           <button
             onClick={onToggleSidebar}
             className="p-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-full transition-colors"
@@ -63,7 +68,6 @@ const ChatSection = ({ onToggleSidebar }) => {
               />
             </svg>
           </button>
-          <h2 className="text-lg font-semibold text-white">Team Chat</h2>
         </div>
       </div>
 

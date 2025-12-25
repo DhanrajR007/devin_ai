@@ -40,6 +40,7 @@ const Project = () => {
         {/* Left Panel - Chat */}
         <div className="w-1/3 min-w-[320px] max-w-[450px] border-r border-gray-800 h-full relative z-0">
           <ChatSection
+            name={location.state?.project.name}
             onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
           />
         </div>
