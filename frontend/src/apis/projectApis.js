@@ -22,3 +22,15 @@ export const getProjectById = async (projectId) => {
   const response = await axiosInstance.get(`/project/${projectId}`, config);
   return response.data;
 };
+
+export const addUserToProject = async (projectId, users) => {
+  const token = localStorage.getItem("authToken");
+  const config = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
+
+  const response = await axiosInstance.put(
+    "/project/add-user",
+    { projectId, users },
+    config
+  );
+  return response.data;
+};

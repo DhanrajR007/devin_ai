@@ -31,6 +31,7 @@ const Project = () => {
         users={users}
         isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}
+        onUserAdded={() => fetchProject(location.state.project._id)}
       />
 
       {/* Main Layout */}
