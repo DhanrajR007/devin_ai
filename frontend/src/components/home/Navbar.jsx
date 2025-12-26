@@ -32,7 +32,7 @@ const Navbar = () => {
             Sign In
           </button>
           <button
-            onClick={() => navigate("/auth")}
+            onClick={() => navigate("/dashboard")}
             className="bg-white text-black px-4 py-2 rounded-lg text-sm font-semibold hover:bg-zinc-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.1)]"
           >
             Get Started
