@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const ChatSection = ({ onToggleSidebar, name }) => {
+const ChatSection = ({ onToggleSidebar, name, setMessagess, sendMessages }) => {
   const [messages, setMessages] = useState([
     {
       id: 1,
@@ -37,6 +37,7 @@ const ChatSection = ({ onToggleSidebar, name }) => {
     };
     setMessages([...messages, newMessage]);
     setInputValue("");
+    sendMessages(newMessage);
   };
 
   return (

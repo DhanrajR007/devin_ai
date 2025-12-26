@@ -4,17 +4,34 @@ import ProjectArea from "../components/project/ProjectArea";
 import UserSidebar from "../components/project/UserSidebar";
 import { useLocation } from "react-router-dom";
 import { getProjectById } from "../apis/projectApis";
+import { initializeSocket, recievMessage, sendMessage } from "../config/socket";
+import { useUser } from "../context/ContextProvider";
 
 const Project = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const location = useLocation();
   const [users, setUsers] = useState([]);
+  // const [messages, setMessagess] = useState("");
+  const { user } = useUser();
+
+  console.log(user);
 
   useEffect(() => {
     if (location.state?.project?._id) {
       fetchProject(location.state.project._id);
+      initializeSocket(location.state?.project?._id);
     }
+    recievMessage("project-message", (data) => {
+      console.log(data);
+    });
   }, [location]);
+  const sendMessages = (message) => {
+    // console.log(message);
+    sendMessage("project-message", {
+      message: message.text,
+      sender: user._id,
+    });
+  };
 
   const fetchProject = async (id) => {
     try {
@@ -40,6 +57,9 @@ const Project = () => {
         <div className="w-1/3 min-w-[320px] max-w-[450px] border-r border-gray-800 h-full relative z-0">
           <ChatSection
             name={location.state?.project.name}
+            // setMessagess={setMessagess}
+            // messages={messages}
+            sendMessages={sendMessages}
             onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
           />
         </div>
