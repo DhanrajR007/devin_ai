@@ -46,11 +46,12 @@ io.use(async (socket, next) => {
 });
 
 io.on("connection", (socket) => {
-  socket.join(socket.project._id);
+  socket.roomId = socket.project._id.toString();
+  socket.join(socket.roomId);
 
   socket.on("project-message", (data) => {
-    console.log(data);
-    socket.broadcast.to(socket.project._id).emit("project-message", data);
+    console.log(socket.roomId, data, socket.user);
+    socket.broadcast.to(socket.roomId).emit("project-message", data);
   });
   console.log("Client connected");
 });

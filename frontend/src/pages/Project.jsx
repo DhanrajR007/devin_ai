@@ -4,7 +4,11 @@ import ProjectArea from "../components/project/ProjectArea";
 import UserSidebar from "../components/project/UserSidebar";
 import { useLocation } from "react-router-dom";
 import { getProjectById } from "../apis/projectApis";
-import { initializeSocket, recievMessage, sendMessage } from "../config/socket";
+import {
+  initializeSocket,
+  receiveMessage,
+  sendMessage,
+} from "../config/socket";
 import { useUser } from "../context/ContextProvider";
 
 const Project = () => {
@@ -14,22 +18,21 @@ const Project = () => {
   // const [messages, setMessagess] = useState("");
   const { user } = useUser();
 
-  console.log(user);
-
   useEffect(() => {
     if (location.state?.project?._id) {
       fetchProject(location.state.project._id);
       initializeSocket(location.state?.project?._id);
     }
-    recievMessage("project-message", (data) => {
+
+    receiveMessage("project-message", (data) => {
       console.log(data);
     });
-  }, [location]);
+  }, []);
+
   const sendMessages = (message) => {
-    // console.log(message);
     sendMessage("project-message", {
       message: message.text,
-      sender: user._id,
+      sender: user,
     });
   };
 

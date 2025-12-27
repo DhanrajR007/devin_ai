@@ -12,9 +12,13 @@ export const initializeSocket = (projectId) => {
   });
 };
 
-export const recievMessage = (eventName, cb) => {
-  socketInstance.on(eventName, cb);
+export const receiveMessage = (eventName, cb) => {
+  if (socketInstance) {
+    socketInstance.on(eventName, cb);
+  }
 };
 export const sendMessage = (eventName, cb) => {
-  socketInstance.emit(eventName, cb);
+  if (socketInstance) {
+    socketInstance.emit(eventName, cb);
+  }
 };
