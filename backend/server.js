@@ -55,7 +55,12 @@ io.on("connection", (socket) => {
   });
   console.log("Client connected");
 });
-
+io.on("disconnect", (socket) => {
+  console.log("Client disconnected");
+});
+io.on("error", (socket) => {
+  console.log("Client error");
+});
 connectDB();
 
 server.listen(process.env.PORT || 3000, () => {

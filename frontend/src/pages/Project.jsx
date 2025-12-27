@@ -18,17 +18,6 @@ const Project = () => {
   // const [messages, setMessagess] = useState("");
   const { user } = useUser();
 
-  useEffect(() => {
-    if (location.state?.project?._id) {
-      fetchProject(location.state.project._id);
-      initializeSocket(location.state?.project?._id);
-    }
-
-    receiveMessage("project-message", (data) => {
-      console.log(data);
-    });
-  }, []);
-
   const sendMessages = (message) => {
     sendMessage("project-message", {
       message: message.text,
@@ -44,6 +33,17 @@ const Project = () => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    if (location.state?.project?._id) {
+      fetchProject(location.state.project._id);
+      initializeSocket(location.state?.project?._id);
+    }
+
+    receiveMessage("project-message", (data) => {
+      console.log(data);
+    });
+  }, []);
   return (
     <div className="relative flex h-screen bg-black overflow-hidden text-white font-sans">
       {/* Sidebar - Overlay */}

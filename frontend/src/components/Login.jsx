@@ -26,7 +26,7 @@ const Login = ({ onSwitch }) => {
         _id: data.user._id,
         email: data.user.email,
       });
-      navigate("/project");
+      navigate("/dashboard");
     } catch (error) {
       console.log(error);
     } finally {
