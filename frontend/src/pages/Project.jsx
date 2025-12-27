@@ -15,10 +15,21 @@ const Project = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const location = useLocation();
   const [users, setUsers] = useState([]);
-  // const [messages, setMessagess] = useState("");
+  const [messages, setMessages] = useState([]);
   const { user } = useUser();
 
   const sendMessages = (message) => {
+    // Append outgoing message to local state immediately
+    setMessages((prev) => [
+      ...prev,
+      {
+        sender: user,
+        message: message.text,
+        time: new Date().toLocaleTimeString(),
+        isOwnMessage: true, // Helper flag
+      },
+    ]);
+
     sendMessage("project-message", {
       message: message.text,
       sender: user,
@@ -37,11 +48,13 @@ const Project = () => {
   useEffect(() => {
     if (location.state?.project?._id) {
       fetchProject(location.state.project._id);
-      initializeSocket(location.state?.project?._id);
+      initializeSocket(location.state.project._id);
     }
 
     receiveMessage("project-message", (data) => {
       console.log(data);
+      // Append incoming message to state
+      setMessages((prev) => [...prev, data]);
     });
   }, []);
   return (
@@ -60,8 +73,7 @@ const Project = () => {
         <div className="w-1/3 min-w-[320px] max-w-[450px] border-r border-gray-800 h-full relative z-0">
           <ChatSection
             name={location.state?.project.name}
-            // setMessagess={setMessagess}
-            // messages={messages}
+            messages={messages}
             sendMessages={sendMessages}
             onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
           />

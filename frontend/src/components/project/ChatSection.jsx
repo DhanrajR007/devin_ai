@@ -1,33 +1,12 @@
 import React, { useState } from "react";
 
-const ChatSection = ({ onToggleSidebar, name, setMessagess, sendMessages }) => {
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      sender: "Alice",
-      text: "Hey team, how's the progress?",
-      time: "10:00 AM",
-    },
-    {
-      id: 2,
-      sender: "You",
-      text: "Working on the new dashboard features.",
-      time: "10:05 AM",
-    },
-    {
-      id: 3,
-      sender: "Bob",
-      text: "I'll join the call in 5 mins.",
-      time: "10:10 AM",
-    },
-  ]);
+const ChatSection = ({ onToggleSidebar, name, sendMessages, messages }) => {
   const [inputValue, setInputValue] = useState("");
 
   const handleSendMessage = (e) => {
     e.preventDefault();
     if (!inputValue.trim()) return;
     const newMessage = {
-      id: messages.length + 1,
       sender: "You",
       text: inputValue,
       time: new Date().toLocaleTimeString([], {
@@ -35,7 +14,6 @@ const ChatSection = ({ onToggleSidebar, name, setMessagess, sendMessages }) => {
         minute: "2-digit",
       }),
     };
-    setMessages([...messages, newMessage]);
     setInputValue("");
     sendMessages(newMessage);
   };
@@ -74,27 +52,27 @@ const ChatSection = ({ onToggleSidebar, name, setMessagess, sendMessages }) => {
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
-        {messages.map((msg) => (
+        {messages.map((msg, index) => (
           <div
-            key={msg.id}
+            key={index}
             className={`flex flex-col ${
-              msg.sender === "You" ? "items-end" : "items-start"
+              msg.isOwnMessage ? "items-end" : "items-start"
             }`}
           >
             <div className="flex items-center space-x-2 mb-1">
               <span className="text-xs font-medium text-gray-400">
-                {msg.sender}
+                {msg.isOwnMessage ? "You" : msg.sender}
               </span>
               <span className="text-xs text-gray-600">{msg.time}</span>
             </div>
             <div
               className={`max-w-[80%] rounded-lg p-3 ${
-                msg.sender === "You"
+                msg.isOwnMessage
                   ? "bg-blue-600 text-white rounded-br-none"
                   : "bg-gray-800 text-gray-200 rounded-bl-none"
               }`}
             >
-              <p className="text-sm">{msg.text}</p>
+              <p className="text-sm">{msg.message}</p>
             </div>
           </div>
         ))}
