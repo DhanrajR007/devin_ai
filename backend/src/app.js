@@ -4,6 +4,7 @@ import cors from "cors";
 import authRoute from "./routes/auth.route.js";
 import cookieParser from "cookie-parser";
 import projectRoute from "./routes/project.route.js";
+import aiRoute from "./routes/ai.route.js";
 const app = express();
 
 app.use(express.json());
@@ -20,4 +21,5 @@ app.use(
 
 app.use("/api/auth", authRoute);
 app.use("/api/project", projectRoute);
+app.use("/api/ai", aiRoute);
 export default app;
