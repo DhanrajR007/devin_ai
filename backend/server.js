@@ -51,21 +51,18 @@ io.on("connection", (socket) => {
   socket.join(socket.roomId);
 
   socket.on("project-message", async (data) => {
+    socket.broadcast.to(socket.roomId).emit("project-message", data);
     const isAi = data.message.includes("@ai");
     if (isAi) {
       const prompt = data.message.replace("@ai", "");
       const response = await geminiAI(prompt);
 
       io.to(socket.roomId).emit("project-message", {
-        response,
-        sender: {
-          email: "AI",
-          _id: "AI",
-        },
+        message: response,
+        sender: "AI",
       });
     }
     console.log(socket.roomId, data.message, socket.user);
-    socket.broadcast.to(socket.roomId).emit("project-message", data);
   });
   console.log("Client connected");
 });
