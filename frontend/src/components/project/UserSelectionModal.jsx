@@ -70,7 +70,7 @@ const UserSelectionModal = ({ users, isOpen, onClose, onAddUser }) => {
                 : "bg-blue-600 text-white hover:bg-blue-700"
             }`}
           >
-            Add Selected
+            Add Selected Users
           </button>
         </div>
       </div>
