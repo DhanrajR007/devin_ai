@@ -56,7 +56,7 @@ io.on("connection", (socket) => {
     if (isAi) {
       const prompt = data.message.replace("@ai", "");
       const response = await geminiAI(prompt);
-
+      console.log(response);
       io.to(socket.roomId).emit("project-message", {
         message: response,
         sender: "AI",
