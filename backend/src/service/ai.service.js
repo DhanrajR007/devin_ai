@@ -1,107 +1,69 @@
 import dotenv from "dotenv";
 dotenv.config();
+
 import { GoogleGenAI } from "@google/genai";
 
+// Initialize Gemini
 const ai = new GoogleGenAI({});
 
+// Main function
 export const geminiAI = async (prompt) => {
-  const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
-    contents: prompt,
-    generationConfig: {
-      responseMimeType: "application/json",
-      temperature: 0.4,
-    },
-    systemInstruction: `You are an expert in MERN and Development. You have an experience of 10 years in the development. You always write code in modular and break the code in the possible way and follow best practices, You use understandable comments in the code, you create files as needed, you write code while maintaining the working of previous code. You always follow the best practices of the development You never miss the edge cases and always write code that is scalable and maintainable, In your code you always handle the errors and exceptions.
-    
-    Examples: 
+  try {
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: prompt,
+      generationConfig: {
+        responseMimeType: "application/json",
+        temperature: 0.3,
+        candidateCount: 1,
+      },
+      systemInstruction: `
+IMPORTANT RULES (FOLLOW STRICTLY):
+- Reply ONLY in valid JSON
+- Do NOT add explanations
+- Do NOT add markdown
+- Do NOT add extra text
+- Response must start with { and end with }
 
- 
-    response: {
+You are an expert MERN developer with 10+ years of experience.
+You always follow best practices, modular code, error handling,
+and scalable structure.
 
-    "text": "this is you fileTree structure of the express server",
-    "fileTree": {
-        "app.js": {
-            file: {
-                contents: "
-                const express = require('express');
+JSON RESPONSE FORMAT EXAMPLE:
 
-                const app = express();
-
-
-                app.get('/', (req, res) => {
-                    res.send('Hello World!');
-                });
-
-
-                app.listen(3000, () => {
-                    console.log('Server is running on port 3000');
-                })
-                "
-            
-        },
-    },
-
-        "package.json": {
-            file: {
-                contents: "
-
-                {
-                    "name": "temp-server",
-                    "version": "1.0.0",
-                    "main": "index.js",
-                    "scripts": {
-                        "test": "echo \"Error: no test specified\" && exit 1"
-                    },
-                    "keywords": [],
-                    "author": "",
-                    "license": "ISC",
-                    "description": "",
-                    "dependencies": {
-                        "express": "^4.21.2"
-                    }
-}
-
-                
-                "
-                
-                
-
-            },
-
-        },
-
-    },
-    "buildCommand": {
-        mainItem: "npm",
-            commands: [ "install" ]
-    },
-
-    "startCommand": {
-        mainItem: "node",
-            commands: [ "app.js" ]
+{
+  "text": "This is the file structure of an Express app",
+  "fileTree": {
+    "app.js": {
+      "file": {
+        "contents": "const express = require('express');"
+      }
     }
+  },
+  "buildCommand": {
+    "mainItem": "npm",
+    "commands": ["install"]
+  },
+  "startCommand": {
+    "mainItem": "node",
+    "commands": ["app.js"]
+  }
 }
 
-    user:Create an express application 
-   
-    </example>
+IMPORTANT:
+- Do NOT use routes/index.js
+`,
+    });
 
+    // Gemini returns text → already JSON
+    return response.text;
+  } catch (error) {
+    console.error("Gemini Error:", error);
 
-    
-       <example>
-
-       user:Hello 
-       response:{
-       "text":"Hello, How can I help you today?"
-       }
-       
-       </example>
-    
- IMPORTANT : don't use file name like routes/index.js
-       
-       
-    `,
-  });
-  return response.text;
+    // Safe fallback JSON
+    return JSON.stringify({
+      error: true,
+      message: "Failed to generate response",
+    });
+  }
 };
