@@ -7,6 +7,7 @@ import { Server } from "socket.io";
 import jwt from "jsonwebtoken";
 import Project from "./src/model/project.model.js";
 import mongoose from "mongoose";
+import { geminiAI } from "./src/service/ai.service.js";
 
 const server = http.createServer(app);
 
@@ -49,9 +50,19 @@ io.on("connection", (socket) => {
   socket.roomId = socket.project._id.toString();
   socket.join(socket.roomId);
 
-  socket.on("project-message", (data) => {
-    console.log(socket.roomId, data, socket.user);
+  socket.on("project-message", async (data) => {
     socket.broadcast.to(socket.roomId).emit("project-message", data);
+    const isAi = data.message.includes("@ai");
+    if (isAi) {
+      const prompt = data.message.replace("@ai", "");
+      const response = await geminiAI(prompt);
+
+      io.to(socket.roomId).emit("project-message", {
+        message: response,
+        sender: "AI",
+      });
+    }
+    console.log(socket.roomId, data.message, socket.user);
   });
   console.log("Client connected");
 });
