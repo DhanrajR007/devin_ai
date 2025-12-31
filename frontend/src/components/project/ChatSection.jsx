@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+import ReactMarkdown from "react-markdown";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism";
+import remarkGfm from "remark-gfm";
 
 const ChatSection = ({ onToggleSidebar, name, sendMessages, messages }) => {
   const [inputValue, setInputValue] = useState("");
@@ -72,7 +76,34 @@ const ChatSection = ({ onToggleSidebar, name, sendMessages, messages }) => {
                   : "bg-gray-800 text-gray-200 rounded-bl-none"
               }`}
             >
-              <p className="text-sm">{msg.message}</p>
+              <div className="prose prose-invert prose-sm max-w-none">
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  components={{
+                    code({ node, inline, className, children, ...props }) {
+                      const match = /language-(\w+)/.exec(className || "");
+                      return !inline && match ? (
+                        <SyntaxHighlighter
+                          style={dracula}
+                          language={match[1]}
+                          PreTag="div"
+                          {...props}
+                        >
+                          {String(children).replace(/\n$/, "")}
+                        </SyntaxHighlighter>
+                      ) : (
+                        <code className={className} {...props}>
+                          {children}
+                        </code>
+                      );
+                    },
+                  }}
+                >
+                  {typeof msg.message === "string"
+                    ? msg.message
+                    : JSON.stringify(msg.message)}
+                </ReactMarkdown>
+              </div>
             </div>
           </div>
         ))}
